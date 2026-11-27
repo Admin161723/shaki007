@@ -170,8 +170,27 @@ function changeLang(lang) {
     renderCountries();
 }
 
-const API_URL = '/api/votes';
+const DB_URL = 'https://intent-oriole-164093.upstash.io';
+const DB_TOKEN = 'gQAAAAAAAoD9AAIgcDE2N2MzODA0ZWVmMzA0NTE2YmFlYmVjNWYzOWNhMjc0MA';
 let serverVotes = {};
+
+async function db(cmd) {
+    const r = await fetch(DB_URL, {
+        method: 'POST',
+        headers: { Authorization: 'Bearer ' + DB_TOKEN },
+        body: JSON.stringify(cmd)
+    });
+    const j = await r.json();
+    if (j.error) throw new Error(j.error);
+    return j.result;
+}
+
+async function fetchAllVotes() {
+    const arr = (await db(['HGETALL', 'votes'])) || [];
+    const o = {};
+    for (let i = 0; i < arr.length; i += 2) o[arr[i]] = parseInt(arr[i + 1], 10) || 0;
+    return o;
+}
 
 function getUserVoted() { try { return JSON.parse(localStorage.getItem('user_voted')) || { muslim: false, country: null }; } catch (e) { return { muslim: false, country: null }; } }
 function saveUserVoted(v) { try { localStorage.setItem('user_voted', JSON.stringify(v)); } catch (e) {} }
@@ -194,12 +213,12 @@ function applyCounts() {
 async function loadServerVotes() {
     if (!document.getElementById('voting-grid')) return;
     try {
-        const r = await fetch(API_URL, { cache: 'no-store' });
-        const j = await r.json();
-        serverVotes = j.votes || {};
+        serverVotes = await fetchAllVotes();
         applyCounts();
-    } catch (e) {  }
+    } catch (e) {}
 }
+
+setInterval(loadServerVotes, 15000);
 
 function renderCountries() {
     const grid = document.getElementById('voting-grid');
@@ -230,23 +249,21 @@ async function vote(id, countElementId) {
     if (!isMuslim && userVoted.country) return alert(msgs.alert_country);
 
     try {
-        const r = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id, voter: voterId() })
-        });
-        const j = await r.json();
-        if (r.status === 409) {
-
-            if (j.votes) serverVotes = j.votes;
-            if (isMuslim) userVoted.muslim = true; else userVoted.country = userVoted.country || id;
-            saveUserVoted(userVoted); applyCounts(); renderCountries();
+        const slot = isMuslim ? 'muslim' : 'country';
+        const key = 'voted:' + slot + ':' + voterId();
+        const ok = await db(['SET', key, id, 'NX', 'EX', '31536000']);
+        if (ok !== 'OK') {
+            const prev = await db(['GET', key]);
+            if (isMuslim) userVoted.muslim = true; else if (prev) userVoted.country = prev;
+            serverVotes = await fetchAllVotes();
+            saveUserVoted(userVoted);
+            applyCounts();
+            renderCountries();
             return alert(isMuslim ? msgs.alert_muslim : msgs.alert_country);
         }
-        if (!r.ok) throw new Error('server');
-        serverVotes = j.votes || serverVotes;
+        await db(['HINCRBY', 'votes', id, '1']);
+        serverVotes = await fetchAllVotes();
     } catch (e) {
-
         serverVotes[id] = (serverVotes[id] || 0) + 1;
     }
 

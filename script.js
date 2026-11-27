@@ -175,14 +175,26 @@ const DB_TOKEN = 'gQAAAAAAAoD9AAIgcDE2N2MzODA0ZWVmMzA0NTE2YmFlYmVjNWYzOWNhMjc0MA
 let serverVotes = {};
 
 async function db(cmd) {
-    const r = await fetch(DB_URL, {
-        method: 'POST',
-        headers: { Authorization: 'Bearer ' + DB_TOKEN },
-        body: JSON.stringify(cmd)
-    });
-    const j = await r.json();
-    if (j.error) throw new Error(j.error);
-    return j.result;
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 10000);
+    try {
+        const r = await fetch(DB_URL, {
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + DB_TOKEN },
+            body: JSON.stringify(cmd),
+            signal: ctl.signal
+        });
+        const j = await r.json();
+        if (j.error) throw new Error(j.error);
+        return j.result;
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
+function setDbStatus(msg) {
+    const el = document.getElementById('db-status');
+    if (el) el.textContent = msg ? 'اتصال به دیتابیس ناموفق بود: ' + msg : '';
 }
 
 async function fetchAllVotes() {
@@ -215,7 +227,10 @@ async function loadServerVotes() {
     try {
         serverVotes = await fetchAllVotes();
         applyCounts();
-    } catch (e) {}
+        setDbStatus('');
+    } catch (e) {
+        setDbStatus(e.name === 'AbortError' ? 'timeout' : e.message);
+    }
 }
 
 setInterval(loadServerVotes, 15000);
@@ -263,8 +278,10 @@ async function vote(id, countElementId) {
         }
         await db(['HINCRBY', 'votes', id, '1']);
         serverVotes = await fetchAllVotes();
+        setDbStatus('');
     } catch (e) {
-        serverVotes[id] = (serverVotes[id] || 0) + 1;
+        setDbStatus(e.name === 'AbortError' ? 'timeout' : e.message);
+        return alert('رای ثبت نشد. ارتباط با دیتابیس برقرار نشد.');
     }
 
     if (isMuslim) {

@@ -350,13 +350,18 @@ function updateNewsStatus(isUrgent, hoursPassed) {
 const MUSIC_FILES = ['music1.mp3', 'music2.mp3', 'music3.mp3'];
 const tracks = MUSIC_FILES.map(src => { const a = new Audio(src); a.preload = 'auto'; return a; });
 
-// Hold the playlist only on an open news article, not the muted news-list thumbnails.
+// The entire news section is background-music-free, including text-only articles.
+const NEWS_PATH = /(?:^|\/)(?:Hk|news\d+)(?:\.html)?\/?$/i;
+function isNewsPage() { return NEWS_PATH.test(location.pathname) || !!document.querySelector('.news-page, .news-article'); }
+let inNews = isNewsPage();
+let heldByOtherNewsTab = false;
 let heldMusic = null;
-function newsPlayerOpen() { return !!document.querySelector('.news-article audio, .news-article video'); }
+const mutedByNews = new Set();
+function musicBlocked() { return inNews || heldByOtherNewsTab; }
 function playingIndex() { return tracks.findIndex(a => !a.paused); }
 
 function playTrack(i, t) {
-    if (newsPlayerOpen()) {
+    if (musicBlocked()) {
         if (!heldMusic) heldMusic = { i, t };
         return Promise.resolve();
     }
@@ -388,9 +393,12 @@ function resumeMusic() {
     return playTrack(i, st && st.t ? st.t : 0);
 }
 
-function startMusic() {
+function startMusic(event) {
+    // Don't start a song on the touch/click that takes the visitor into the news.
+    const link = event && event.target.closest && event.target.closest('a[href]');
+    if (link && link.origin === location.origin && NEWS_PATH.test(link.pathname)) return;
     resumeMusic().then(() => {
-        if (playingIndex() < 0) return;
+        if (musicBlocked() || playingIndex() < 0) return;
         heldMusic = null;
         document.removeEventListener('click', startMusic);
         document.removeEventListener('touchstart', startMusic);
@@ -403,22 +411,64 @@ function armMusicStart() {
 armMusicStart();
 window.addEventListener('load', () => { try { if (localStorage.getItem('music_state')) startMusic(); } catch (e) {} });
 
-function syncNewsMusic() {
-    if (newsPlayerOpen()) {
+function applyNewsMusicHold() {
+    if (musicBlocked()) {
         const i = playingIndex();
-        if (i < 0) return;
-        heldMusic = { i, t: tracks[i].currentTime };
-        saveMusicState();
-        tracks.forEach(a => { if (!a.paused) a.pause(); });
-    } else if (heldMusic) {
-        armMusicStart(); // Keep a gesture fallback if the browser blocks resuming.
+        if (i >= 0) {
+            heldMusic = { i, t: tracks[i].currentTime };
+            saveMusicState();
+        }
+        // Only these detached playlist tracks are ours; leave news audio/video alone.
+        tracks.forEach(a => {
+            if (!a.muted) { mutedByNews.add(a); a.muted = true; }
+            if (!a.paused) a.pause();
+        });
+        return;
+    }
+    mutedByNews.forEach(a => { a.muted = false; });
+    mutedByNews.clear();
+    if (heldMusic) {
+        armMusicStart(); // Retry on a gesture if the browser blocks resuming.
         startMusic();
     }
 }
+tracks.forEach(a => a.addEventListener('play', () => {
+    if (musicBlocked() && !a.paused) a.pause();
+}));
+
+// If news is opened in a second tab, silence an already-playing tab of this site.
+// Use a transient message, not a persistent site-wide mute preference.
+let newsChannel;
+try { newsChannel = new BroadcastChannel('shaki007-news-audio'); } catch (e) {}
+function announceNewsFocus() {
+    if (newsChannel && inNews && !document.hidden && document.hasFocus()) newsChannel.postMessage('news-active');
+}
+if (newsChannel) {
+    newsChannel.onmessage = e => {
+        if (e.data !== 'news-active' || (!document.hidden && document.hasFocus())) return;
+        heldByOtherNewsTab = true;
+        applyNewsMusicHold();
+    };
+    const onMusicFocus = () => {
+        if (document.hidden || !document.hasFocus()) return;
+        if (heldByOtherNewsTab) { heldByOtherNewsTab = false; applyNewsMusicHold(); }
+        announceNewsFocus();
+    };
+    window.addEventListener('focus', onMusicFocus);
+    document.addEventListener('visibilitychange', onMusicFocus);
+}
+function syncNewsMusic(news = isNewsPage()) {
+    inNews = news;
+    applyNewsMusicHold();
+    announceNewsFocus();
+}
+window.addEventListener('pageshow', e => { if (e.persisted) syncNewsMusic(); });
 
 const PAGE_RE = /^(index|Hk|Man|news\d+)\.html(#.*)?$/;
 async function navigate(url, push) {
     try {
+        // Silence the playlist immediately, even if the news page takes time to load.
+        if (NEWS_PATH.test(new URL(url, location.href).pathname)) syncNewsMusic(true);
         const r = await fetch(url);
         if (!r.ok) throw new Error('nf');
         const doc = new DOMParser().parseFromString(await r.text(), 'text/html');

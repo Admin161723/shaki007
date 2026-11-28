@@ -13,9 +13,10 @@ const translations = {
         contact_us: "ارتباط با ما", link_site: "وب سایت رسمی", link_telegram: "تلگرام", link_instagram: "اینستاگرام", link_youtube: "یوتیوب",
         power_text: "قدرت در دستان اسلام و مسلمان خواهد بود",
         legal_text: "اطلاعات وب سایت رسمی shaki007.ir محفوظ ۲۰۲۵ است. هرگونه تهمت و افترا و انتشار یا استفاده از عکس‌ها و ویدیوهای این وب سایت بدون اجازه، پیگرد قانونی دارد.",
-        hk_title: "خبر و حمایتگران", hk_text: "اخبار و اطلاعیه‌ها به زودی در این بخش قرار می‌گیرد.",
+        hk_title: "خبر و حمایتگران",
         man_title: "توضیحات درباره من", man_text: "توضیحات درباره من به زودی در این بخش قرار می‌گیرد.",
-        about_1: "سلام وقت بخیر بنده shaki007 هستم", about_2: "استاد و تدریس گر سیستم امنیت برای افراد خواص", about_3: "برنامه نویس اندروید، ویندوز، iOS، مک", about_4: "استاد کار داخل ساخت وب سایت های بزرگ از برقراری امنیت تا حد زیبای ساده گی.", about_c1: "همکاری با سپاه استان تهران کرج", about_c2: "همکاری با ارتش مرز آذربایجان", about_c3: "همکاری با بسیج تبریز", about_c4: "همکاری با سپاه تبریز", about_6: "السلام علیکم و رحمته الله برکاته", news1_title: "به‌روزرسانی جدید سایت انجام شد", news1_date: "۶ آذر ۱۴۰۵", news1_body: "نسخه جدید سایت با امکانات تازه راه‌اندازی شد: چهار زبان جدید، رای‌گیری حمایتگران از همه کشورها و امنیت بالاتر. از همراهی شما سپاسگزاریم.",
+        about_1: "سلام وقت بخیر بنده shaki007 هستم", about_2: "استاد و تدریس گر سیستم امنیت برای افراد خواص", about_3: "برنامه نویس اندروید، ویندوز، iOS، مک", about_4: "استاد کار داخل ساخت وب سایت های بزرگ از برقراری امنیت تا حد زیبای ساده گی.", about_c1: "همکاری با سپاه استان تهران کرج", about_c2: "همکاری با ارتش مرز آذربایجان", about_c3: "همکاری با بسیج تبریز", about_c4: "همکاری با سپاه تبریز", about_6: "السلام علیکم و رحمته الله برکاته",
+        news_label_normal: "اخبار", urgent_badge: "فوری", back_news: "→ بازگشت به اخبار", n1_title: "مصالح بهشت", n1_sum: "مصالح بهشت از امام خمینی", n1_body: "مصالح بهشت از امام خمینی", n1_date: "۷ آذر ۱۴۰۵", n2_title: "ادعاهای پوچ", n2_sum: "ادعاهای پوچ", n2_body: "ادعاهای پوچ", n2_date: "۷ آذر ۱۴۰۵", n3_title: "شجاعت امام مجتبی خامنه‌ای", n3_sum: "درباره شجاعت امام مجتبی خامنه‌ای", n3_body: "درباره شجاعت امام مجتبی خامنه‌ای", n3_date: "۷ آذر ۱۴۰۵",
         alert_muslim: "شما قبلا به مسلمان رای داده اید!",
         alert_country: "شما قبلا به یک کشور رای داده اید!"
     },
@@ -33,9 +34,10 @@ const translations = {
         contact_us: "Contact Us", link_site: "Official Website", link_telegram: "Telegram", link_instagram: "Instagram", link_youtube: "YouTube",
         power_text: "Power will be in the hands of Islam and Muslims",
         legal_text: "The information of the official website shaki007.ir is protected, 2025. Any defamation, and any unauthorized publication or use of the photos and videos of this website, is subject to legal action.",
-        hk_title: "News & Supporters", hk_text: "News and announcements will be published in this section soon.",
+        hk_title: "News & Supporters",
         man_title: "About Me", man_text: "The description about me will be published in this section soon.",
-        about_1: "Hello, good day. I am shaki007.", about_2: "Teacher and instructor of security systems for special individuals.", about_3: "Programmer for Android, Windows, iOS and macOS.", about_4: "Expert in building large websites, from establishing security to elegant simplicity.", about_c1: "Cooperation with the IRGC of Tehran Province, Karaj", about_c2: "Cooperation with the Army at the Azerbaijan border", about_c3: "Cooperation with the Basij of Tabriz", about_c4: "Cooperation with the IRGC of Tabriz", about_6: "Peace be upon you, and the mercy and blessings of God.", news1_title: "New site update completed", news1_date: "27 November 2026", news1_body: "The new version of the site is live with new features: four new languages, supporter voting for all countries, and stronger security. Thank you for being with us.",
+        about_1: "Hello, good day. I am shaki007.", about_2: "Teacher and instructor of security systems for special individuals.", about_3: "Programmer for Android, Windows, iOS and macOS.", about_4: "Expert in building large websites, from establishing security to elegant simplicity.", about_c1: "Cooperation with the IRGC of Tehran Province, Karaj", about_c2: "Cooperation with the Army at the Azerbaijan border", about_c3: "Cooperation with the Basij of Tabriz", about_c4: "Cooperation with the IRGC of Tabriz", about_6: "Peace be upon you, and the mercy and blessings of God.",
+        news_label_normal: "News", urgent_badge: "Urgent", back_news: "← Back to news", n1_title: "Materials of Paradise", n1_sum: "Materials of Paradise, from Imam Khomeini", n1_body: "Materials of Paradise, from Imam Khomeini", n1_date: "28 November 2026", n2_title: "Empty Claims", n2_sum: "Empty claims", n2_body: "Empty claims", n2_date: "28 November 2026", n3_title: "The Courage of Imam Mojtaba Khamenei", n3_sum: "About the courage of Imam Mojtaba Khamenei", n3_body: "About the courage of Imam Mojtaba Khamenei", n3_date: "28 November 2026",
         alert_muslim: "You have already voted for Muslim!",
         alert_country: "You have already voted for a country!"
     },
@@ -53,9 +55,10 @@ const translations = {
         contact_us: "Связаться с нами", link_site: "Официальный сайт", link_telegram: "Телеграм", link_instagram: "Инстаграм", link_youtube: "Ютуб",
         power_text: "Власть будет в руках ислама и мусульман",
         legal_text: "Информация официального сайта shaki007.ir защищена, 2025. Любая клевета, а также несанкционированная публикация или использование фото и видео этого сайта влечёт юридическое преследование.",
-        hk_title: "Новости и сторонники", hk_text: "Новости и объявления скоро появятся в этом разделе.",
+        hk_title: "Новости и сторонники",
         man_title: "Обо мне", man_text: "Информация обо мне скоро появится в этом разделе.",
-        about_1: "Здравствуйте, добрый день. Я shaki007.", about_2: "Преподаватель и наставник по системам безопасности для особых лиц.", about_3: "Программист для Android, Windows, iOS и macOS.", about_4: "Мастер создания крупных сайтов — от обеспечения безопасности до изящной простоты.", about_c1: "Сотрудничество с КСИР провинции Тегеран, Карадж", about_c2: "Сотрудничество с армией на границе с Азербайджаном", about_c3: "Сотрудничество с Басиджем Тебриза", about_c4: "Сотрудничество с КСИР Тебриза", about_6: "Мир вам, милость Аллаха и Его благословение.", news1_title: "Новое обновление сайта завершено", news1_date: "27 ноября 2026", news1_body: "Запущена новая версия сайта с новыми возможностями: четыре новых языка, голосование сторонников от всех стран и повышенная безопасность. Благодарим, что вы с нами.",
+        about_1: "Здравствуйте, добрый день. Я shaki007.", about_2: "Преподаватель и наставник по системам безопасности для особых лиц.", about_3: "Программист для Android, Windows, iOS и macOS.", about_4: "Мастер создания крупных сайтов — от обеспечения безопасности до изящной простоты.", about_c1: "Сотрудничество с КСИР провинции Тегеран, Карадж", about_c2: "Сотрудничество с армией на границе с Азербайджаном", about_c3: "Сотрудничество с Басиджем Тебриза", about_c4: "Сотрудничество с КСИР Тебриза", about_6: "Мир вам, милость Аллаха и Его благословение.",
+        news_label_normal: "Новости", urgent_badge: "Срочно", back_news: "← Назад к новостям", n1_title: "Материалы рая", n1_sum: "Материалы рая — от имама Хомейни", n1_body: "Материалы рая — от имама Хомейни", n1_date: "28 ноября 2026", n2_title: "Пустые утверждения", n2_sum: "Пустые утверждения", n2_body: "Пустые утверждения", n2_date: "28 ноября 2026", n3_title: "Мужество имама Моджтабы Хаменеи", n3_sum: "О мужестве имама Моджтабы Хаменеи", n3_body: "О мужестве имама Моджтабы Хаменеи", n3_date: "28 ноября 2026",
         alert_muslim: "Вы уже проголосовали за «Мусульманин»!",
         alert_country: "Вы уже проголосовали за страну!"
     },
@@ -73,9 +76,10 @@ const translations = {
         contact_us: "联系我们", link_site: "官方网站", link_telegram: "电报", link_instagram: "Instagram", link_youtube: "YouTube",
         power_text: "权力将掌握在伊斯兰和穆斯林手中",
         legal_text: "官方网站 shaki007.ir 的信息受保护，2025年。任何诽谤，以及未经许可发布或使用本网站照片和视频的行为，将被追究法律责任。",
-        hk_title: "新闻与支持者", hk_text: "新闻和公告即将发布在此栏目。",
+        hk_title: "新闻与支持者",
         man_title: "关于我", man_text: "关于我的介绍即将发布在此栏目。",
-        about_1: "您好，我是 shaki007。", about_2: "面向特殊人群的安全系统导师与讲师。", about_3: "Android、Windows、iOS 和 macOS 程序员。", about_4: "大型网站建设专家，从构建安全到追求优雅简洁。", about_c1: "与德黑兰省卡拉季伊斯兰革命卫队合作", about_c2: "与阿塞拜疆边境陆军合作", about_c3: "与大不里士巴斯基民兵合作", about_c4: "与大不里士伊斯兰革命卫队合作", about_6: "愿真主的平安、慈悲与祝福降临于您。", news1_title: "网站新版本更新完成", news1_date: "2026年11月27日", news1_body: "网站新版本已上线，新增四种语言、全球各国支持者投票以及更高的安全性。感谢您的陪伴。",
+        about_1: "您好，我是 shaki007。", about_2: "面向特殊人群的安全系统导师与讲师。", about_3: "Android、Windows、iOS 和 macOS 程序员。", about_4: "大型网站建设专家，从构建安全到追求优雅简洁。", about_c1: "与德黑兰省卡拉季伊斯兰革命卫队合作", about_c2: "与阿塞拜疆边境陆军合作", about_c3: "与大不里士巴斯基民兵合作", about_c4: "与大不里士伊斯兰革命卫队合作", about_6: "愿真主的平安、慈悲与祝福降临于您。",
+        news_label_normal: "新闻", urgent_badge: "紧急", back_news: "← 返回新闻", n1_title: "天堂的建材", n1_sum: "天堂的建材，来自伊玛目霍梅尼", n1_body: "天堂的建材，来自伊玛目霍梅尼", n1_date: "2026年11月28日", n2_title: "空洞的说法", n2_sum: "空洞的说法", n2_body: "空洞的说法", n2_date: "2026年11月28日", n3_title: "伊玛目穆杰塔巴·哈梅内伊的勇气", n3_sum: "关于伊玛目穆杰塔巴·哈梅内伊的勇气", n3_body: "关于伊玛目穆杰塔巴·哈梅内伊的勇气", n3_date: "2026年11月28日",
         alert_muslim: "您已经为“穆斯林”投过票了！",
         alert_country: "您已经为一个国家投过票了！"
     },
@@ -93,9 +97,10 @@ const translations = {
         contact_us: "문의하기", link_site: "공식 웹사이트", link_telegram: "텔레그램", link_instagram: "인스타그램", link_youtube: "유튜브",
         power_text: "권력은 이슬람과 무슬림의 손에 있을 것입니다",
         legal_text: "공식 웹사이트 shaki007.ir의 정보는 2025년 보호됩니다. 모든 비방 및 이 웹사이트의 사진·영상의 무단 게시 또는 사용은 법적 조치의 대상이 됩니다.",
-        hk_title: "뉴스 및 후원자", hk_text: "뉴스와 공지는 곧 이 섹션에 게시됩니다.",
+        hk_title: "뉴스 및 후원자",
         man_title: "나에 대해", man_text: "나에 대한 설명은 곧 이 섹션에 게시됩니다.",
-        about_1: "안녕하세요, 저는 shaki007입니다.", about_2: "특별한 분들을 위한 보안 시스템 강사이자 교수자입니다.", about_3: "안드로이드, 윈도우, iOS, 맥 프로그래머.", about_4: "보안 구축부터 우아한 단순함까지, 대형 웹사이트 제작 전문가.", about_c1: "테헤란주 카라지 혁명수비대와 협력", about_c2: "아제르바이잔 국경 군대와 협력", about_c3: "타브리즈 바시지와 협력", about_c4: "타브리즈 혁명수비대와 협력", about_6: "알라의 평화와 자비와 축복이 함께하기를.", news1_title: "새 사이트 업데이트 완료", news1_date: "2026년 11월 27일", news1_body: "새 버전의 사이트가 공개되었습니다. 새로운 4개 언어, 모든 국가의 후원자 투표, 강화된 보안이 추가되었습니다. 함께해 주셔서 감사합니다.",
+        about_1: "안녕하세요, 저는 shaki007입니다.", about_2: "특별한 분들을 위한 보안 시스템 강사이자 교수자입니다.", about_3: "안드로이드, 윈도우, iOS, 맥 프로그래머.", about_4: "보안 구축부터 우아한 단순함까지, 대형 웹사이트 제작 전문가.", about_c1: "테헤란주 카라지 혁명수비대와 협력", about_c2: "아제르바이잔 국경 군대와 협력", about_c3: "타브리즈 바시지와 협력", about_c4: "타브리즈 혁명수비대와 협력", about_6: "알라의 평화와 자비와 축복이 함께하기를.",
+        news_label_normal: "뉴스", urgent_badge: "긴급", back_news: "← 뉴스로 돌아가기", n1_title: "천국의 재료", n1_sum: "천국의 재료, 이맘 호메이니로부터", n1_body: "천국의 재료, 이맘 호메이니로부터", n1_date: "2026년 11월 28일", n2_title: "공허한 주장", n2_sum: "공허한 주장", n2_body: "공허한 주장", n2_date: "2026년 11월 28일", n3_title: "이맘 모즈타바 하메네이의 용기", n3_sum: "이맘 모즈타바 하메네이의 용기에 대하여", n3_body: "이맘 모즈타바 하메네이의 용기에 대하여", n3_date: "2026년 11월 28일",
         alert_muslim: "이미 '무슬림'에 투표하셨습니다!",
         alert_country: "이미 한 국가에 투표하셨습니다!"
     }
@@ -158,6 +163,35 @@ function translateEl(el, lang) {
     autoTranslate(el.dataset.orig, lang).then(t => { if (currentLang === lang) el.textContent = t; });
 }
 
+const NEWS = [
+    { id: 'n1', page: 'news1.html', urgent: false },
+    { id: 'n2', page: 'news2.html', urgent: false },
+    { id: 'n3', page: 'news3.html', urgent: false }
+];
+
+function buildTicker() {
+    const track = document.getElementById('news-track');
+    if (!track) return;
+    const t = translations[currentLang];
+    const items = NEWS.slice().sort((a, b) => (b.urgent ? 1 : 0) - (a.urgent ? 1 : 0));
+    const one = items.map(n =>
+        '<a class="news-text" href="' + n.page + '">' +
+        (n.urgent ? '<span class="urgent-badge">' + t.urgent_badge + '</span>' : '') +
+        t[n.id + '_title'] + '</a>'
+    ).join('');
+    const half = one.repeat(4);
+    track.innerHTML = half + half;
+    const hasUrgent = items.some(n => n.urgent);
+    const ticker = document.getElementById('news-ticker');
+    if (!ticker) return;
+    ticker.classList.toggle('urgent', hasUrgent);
+    const label = ticker.querySelector('.news-label');
+    if (label) {
+        label.dataset.i18n = hasUrgent ? 'news_label' : 'news_label_normal';
+        label.textContent = t[label.dataset.i18n];
+    }
+}
+
 function changeLang(lang) {
     if (!translations[lang]) lang = 'fa';
     currentLang = lang;
@@ -168,6 +202,7 @@ function changeLang(lang) {
     try { localStorage.setItem('site_lang', lang); } catch (e) {}
     document.querySelectorAll('[data-i18n],[data-auto]').forEach(el => translateEl(el, lang));
     renderCountries();
+    buildTicker();
 }
 
 const DB_URL = 'https://intent-oriole-164093.upstash.io';
@@ -354,7 +389,7 @@ document.addEventListener('click', startMusic);
 document.addEventListener('touchstart', startMusic);
 window.addEventListener('load', () => { try { if (localStorage.getItem('music_state')) startMusic(); } catch (e) {} });
 
-const PAGE_RE = /^(index|Hk|Man)\.html(#.*)?$/;
+const PAGE_RE = /^(index|Hk|Man|news\d+)\.html(#.*)?$/;
 async function navigate(url, push) {
     try {
         const r = await fetch(url);
@@ -432,7 +467,6 @@ function initPage() {
     let saved = 'fa';
     try { saved = localStorage.getItem('site_lang') || 'fa'; } catch (e) {}
     changeLang(saved);
-    updateNewsStatus(true, 5);
     loadServerVotes();
 }
 document.addEventListener('DOMContentLoaded', initPage);

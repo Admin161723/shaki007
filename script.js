@@ -350,9 +350,16 @@ function updateNewsStatus(isUrgent, hoursPassed) {
 const MUSIC_FILES = ['music1.mp3', 'music2.mp3', 'music3.mp3'];
 const tracks = MUSIC_FILES.map(src => { const a = new Audio(src); a.preload = 'auto'; return a; });
 
+// Hold the playlist only on an open news article, not the muted news-list thumbnails.
+let heldMusic = null;
+function newsPlayerOpen() { return !!document.querySelector('.news-article audio, .news-article video'); }
 function playingIndex() { return tracks.findIndex(a => !a.paused); }
 
 function playTrack(i, t) {
+    if (newsPlayerOpen()) {
+        if (!heldMusic) heldMusic = { i, t };
+        return Promise.resolve();
+    }
     const a = tracks[i];
     if (t) {
         if (a.readyState >= 1) { try { a.currentTime = t; } catch (e) {} }
@@ -373,21 +380,41 @@ window.addEventListener('pagehide', saveMusicState);
 
 function resumeMusic() {
     if (playingIndex() >= 0) return Promise.resolve();
-    let st = null;
-    try { st = JSON.parse(localStorage.getItem('music_state')); } catch (e) {}
+    let st = heldMusic;
+    if (!st) {
+        try { st = JSON.parse(localStorage.getItem('music_state')); } catch (e) {}
+    }
     const i = st && typeof st.i === 'number' && tracks[st.i] ? st.i : 0;
     return playTrack(i, st && st.t ? st.t : 0);
 }
 
 function startMusic() {
     resumeMusic().then(() => {
+        if (playingIndex() < 0) return;
+        heldMusic = null;
         document.removeEventListener('click', startMusic);
         document.removeEventListener('touchstart', startMusic);
     }).catch(() => {});
 }
-document.addEventListener('click', startMusic);
-document.addEventListener('touchstart', startMusic);
+function armMusicStart() {
+    document.addEventListener('click', startMusic);
+    document.addEventListener('touchstart', startMusic);
+}
+armMusicStart();
 window.addEventListener('load', () => { try { if (localStorage.getItem('music_state')) startMusic(); } catch (e) {} });
+
+function syncNewsMusic() {
+    if (newsPlayerOpen()) {
+        const i = playingIndex();
+        if (i < 0) return;
+        heldMusic = { i, t: tracks[i].currentTime };
+        saveMusicState();
+        tracks.forEach(a => { if (!a.paused) a.pause(); });
+    } else if (heldMusic) {
+        armMusicStart(); // Keep a gesture fallback if the browser blocks resuming.
+        startMusic();
+    }
+}
 
 const PAGE_RE = /^(index|Hk|Man|news\d+)\.html(#.*)?$/;
 async function navigate(url, push) {
@@ -452,6 +479,7 @@ if (!isTouch) {
 }
 
 function initPage() {
+    syncNewsMusic();
     document.querySelectorAll('[data-i18n],[data-auto]').forEach(el => { if (el.dataset.orig === undefined) el.dataset.orig = el.textContent.trim(); });
 
     const langBtn = document.getElementById('lang-btn');

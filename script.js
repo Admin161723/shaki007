@@ -163,33 +163,280 @@ function translateEl(el, lang) {
     autoTranslate(el.dataset.orig, lang).then(t => { if (currentLang === lang) el.textContent = t; });
 }
 
+// News and vote UI only; the existing menu translations are untouched.
+const NEWS_COPY = {
+  "fa": {
+    "ns_label": "جست‌وجو در خبرها",
+    "ns_hint": "عنوان یا توضیح خبر را بنویسید…",
+    "ns_go": "جست‌وجو",
+    "ns_clear": "پاک کردن جست‌وجو",
+    "ns_all": "{n} خبر",
+    "ns_matches": "{n} نتیجه از {total} خبر",
+    "ns_none": "خبری پیدا نشد",
+    "ns_again": "یک عبارت کوتاه‌تر را امتحان کنید.",
+    "ns_reset": "نمایش همهٔ خبرها",
+    "ns_no_video": "ویدیو فعلاً در دسترس نیست",
+    "vs_offline": "دریافت آرا ممکن نشد.",
+    "vs_stale": "آخرین اعداد تأییدشده نمایش داده می‌شوند.",
+    "vs_unknown": "هنوز عدد تأییدشده‌ای در دسترس نیست.",
+    "vs_fail": "تأیید ثبت رأی دریافت نشد؛ می‌تونی دوباره امتحان کنی.",
+    "vs_sending": "در حال ثبت رأی…",
+    "n4_title": "امام خمینی با یک کلام باقیمت فرمود",
+    "n4_sum": "امام خمینی با یک کلام باقیمت فرمود",
+    "n4_date": "۷ آذر ۱۴۰۵",
+    "n4_p1": "امام خمینی با یک کلام باقیمت فرمود",
+    "n5_title": "نظر امام را باید فهمید",
+    "n5_sum": "ولو درِ منزل امام بسته باشه، نذارن کسی بره سوال کنه ...",
+    "n5_date": "۷ آذر ۱۴۰۵",
+    "n5_p1": "ولو درِ منزل امام بسته باشه، نذارن کسی بره سوال کنه ...",
+    "n5_p2": "✍نظر امام را باید فهمید.",
+    "n5_p3": "باید مبانی امام را متوجه بود، خوب صحبت ها و پیام ها و مطالب امام را شنید",
+    "n5_p4": "چنانچه در وضعی قرار گرفتیم که نتوانیم نظر صریح امام را بدانیم و یا شرایط برای امام فراهم نباشد که صریح مطلوب خود را بیان کند ما مردم باید مطلوب امام را دنبال کنیم ، مطالبه کنیم",
+    "n5_p5": "که فهم و اجرای نظر امام ، همان خلاصه فهم و اجرای قرآن در آن زمان است..",
+    "n6_title": "یک رهبر بالامقام قوی",
+    "n6_sum": "یک رهبر بالامقام قوی",
+    "n6_date": "۷ آذر ۱۴۰۵",
+    "n6_p1": "یک رهبر بالامقام قوی"
+  },
+  "en": {
+    "ns_label": "Search the news",
+    "ns_hint": "Enter a headline or description…",
+    "ns_go": "Search",
+    "ns_clear": "Clear search",
+    "ns_all": "News: {n}",
+    "ns_matches": "{n} of {total} articles",
+    "ns_none": "No articles found",
+    "ns_again": "Try a shorter search.",
+    "ns_reset": "Show all news",
+    "ns_no_video": "Video currently unavailable",
+    "vs_offline": "Could not load vote totals.",
+    "vs_stale": "Showing the last confirmed totals.",
+    "vs_unknown": "No confirmed totals yet.",
+    "vs_fail": "The vote was not confirmed. You can try again.",
+    "vs_sending": "Submitting your vote…",
+    "n4_title": "A precious word from Imam Khomeini",
+    "n4_sum": "A precious word from Imam Khomeini",
+    "n4_date": "28 November 2026",
+    "n4_p1": "A precious word from Imam Khomeini",
+    "n5_title": "Understanding the Imam’s view",
+    "n5_sum": "Even if the Imam’s door is closed and no one is allowed in to ask a question…",
+    "n5_date": "28 November 2026",
+    "n5_p1": "Even if the Imam’s door is closed and no one is allowed in to ask a question…",
+    "n5_p2": "✍ We must understand the Imam’s view.",
+    "n5_p3": "We must understand his principles and listen carefully to his words, messages and statements.",
+    "n5_p4": "If we cannot learn his explicit view, or if circumstances do not allow him to say plainly what he wants, we, the people, must pursue what he wants and call for it.",
+    "n5_p5": "For understanding and putting the Imam’s view into practice is, in essence, understanding and putting the Quran into practice at that time.",
+    "n6_title": "A strong, high-ranking leader",
+    "n6_sum": "A strong, high-ranking leader",
+    "n6_date": "28 November 2026",
+    "n6_p1": "A strong, high-ranking leader"
+  },
+  "ru": {
+    "ns_label": "Поиск по новостям",
+    "ns_hint": "Введите заголовок или описание…",
+    "ns_go": "Найти",
+    "ns_clear": "Очистить поиск",
+    "ns_all": "Новостей: {n}",
+    "ns_matches": "Найдено: {n} из {total}",
+    "ns_none": "Новостей не найдено",
+    "ns_again": "Попробуйте более короткий запрос.",
+    "ns_reset": "Показать все новости",
+    "ns_no_video": "Видео пока недоступно",
+    "vs_offline": "Не удалось получить результаты.",
+    "vs_stale": "Показаны последние подтверждённые данные.",
+    "vs_unknown": "Подтверждённых данных пока нет.",
+    "vs_fail": "Подтверждение не получено. Можно повторить попытку.",
+    "vs_sending": "Отправляем голос…",
+    "n4_title": "Ценное высказывание имама Хомейни",
+    "n4_sum": "Ценное высказывание имама Хомейни",
+    "n4_date": "28 ноября 2026",
+    "n4_p1": "Ценное высказывание имама Хомейни",
+    "n5_title": "Нужно понимать мнение имама",
+    "n5_sum": "Даже если дверь дома имама закрыта и никого не пускают задать вопрос…",
+    "n5_date": "28 ноября 2026",
+    "n5_p1": "Даже если дверь дома имама закрыта и никого не пускают задать вопрос…",
+    "n5_p2": "✍ Нужно понимать мнение имама.",
+    "n5_p3": "Нужно понимать принципы имама и внимательно слушать его речи, послания и высказывания.",
+    "n5_p4": "Если мы не можем узнать его мнение напрямую или обстоятельства не позволяют ему прямо сказать, чего он хочет, мы, народ, должны добиваться того, чего он хочет, и требовать этого.",
+    "n5_p5": "Ведь понять и воплотить в жизнь мнение имама — это, по сути, понять и претворить в жизнь Коран в то время.",
+    "n6_title": "Сильный высокопоставленный лидер",
+    "n6_sum": "Сильный высокопоставленный лидер",
+    "n6_date": "28 ноября 2026",
+    "n6_p1": "Сильный высокопоставленный лидер"
+  },
+  "zh": {
+    "ns_label": "搜索新闻",
+    "ns_hint": "输入标题或新闻简介…",
+    "ns_go": "搜索",
+    "ns_clear": "清除搜索",
+    "ns_all": "共 {n} 条新闻",
+    "ns_matches": "找到 {n} 条，共 {total} 条",
+    "ns_none": "未找到新闻",
+    "ns_again": "请尝试更短的搜索词。",
+    "ns_reset": "显示全部新闻",
+    "ns_no_video": "视频暂不可用",
+    "vs_offline": "无法获取投票数。",
+    "vs_stale": "显示上次确认的票数。",
+    "vs_unknown": "暂无已确认的票数。",
+    "vs_fail": "未收到投票确认，可再试一次。",
+    "vs_sending": "正在提交投票…",
+    "n4_title": "伊玛目霍梅尼的一句珍贵话语",
+    "n4_sum": "伊玛目霍梅尼的一句珍贵话语",
+    "n4_date": "2026年11月28日",
+    "n4_p1": "伊玛目霍梅尼的一句珍贵话语",
+    "n5_title": "应当理解伊玛目的看法",
+    "n5_sum": "即使伊玛目的家门紧闭，不让人进去提问……",
+    "n5_date": "2026年11月28日",
+    "n5_p1": "即使伊玛目的家门紧闭，不让人进去提问……",
+    "n5_p2": "✍ 应当理解伊玛目的看法。",
+    "n5_p3": "应当理解伊玛目的原则，仔细聆听他的讲话、寄语和论述。",
+    "n5_p4": "如果我们无法得知伊玛目明确的意见，或者条件不允许他直言自己的愿望，我们民众就应当追求他所期望的，并为之提出诉求。",
+    "n5_p5": "因为在那个时代，理解和践行伊玛目的意见，就是理解和践行《古兰经》的要义。",
+    "n6_title": "一位地位崇高、坚强的领袖",
+    "n6_sum": "一位地位崇高、坚强的领袖",
+    "n6_date": "2026年11月28日",
+    "n6_p1": "一位地位崇高、坚强的领袖"
+  },
+  "ko": {
+    "ns_label": "뉴스 검색",
+    "ns_hint": "제목이나 설명을 입력하세요…",
+    "ns_go": "검색",
+    "ns_clear": "검색어 지우기",
+    "ns_all": "전체 뉴스 {n}건",
+    "ns_matches": "전체 {total}건 중 {n}건",
+    "ns_none": "검색 결과가 없습니다",
+    "ns_again": "더 짧은 검색어를 입력해 보세요.",
+    "ns_reset": "모든 뉴스 보기",
+    "ns_no_video": "현재 동영상을 볼 수 없습니다",
+    "vs_offline": "투표 수를 불러오지 못했습니다.",
+    "vs_stale": "마지막으로 확인된 투표 수입니다.",
+    "vs_unknown": "아직 확인된 투표 수가 없습니다.",
+    "vs_fail": "투표 확인을 받지 못했습니다. 다시 시도할 수 있습니다.",
+    "vs_sending": "투표를 보내는 중…",
+    "n4_title": "이맘 호메이니의 귀중한 한마디",
+    "n4_sum": "이맘 호메이니의 귀중한 한마디",
+    "n4_date": "2026년 11월 28일",
+    "n4_p1": "이맘 호메이니의 귀중한 한마디",
+    "n5_title": "이맘의 견해를 이해해야 한다",
+    "n5_sum": "이맘의 집 문이 닫혀 있고 아무도 들어가 질문할 수 없다 해도…",
+    "n5_date": "2026년 11월 28일",
+    "n5_p1": "이맘의 집 문이 닫혀 있고 아무도 들어가 질문할 수 없다 해도…",
+    "n5_p2": "✍ 이맘의 견해를 이해해야 한다.",
+    "n5_p3": "이맘의 원칙을 이해하고 그의 말과 메시지와 발언을 주의 깊게 들어야 한다.",
+    "n5_p4": "이맘의 명확한 견해를 알 수 없거나 그가 원하는 것을 분명히 밝힐 여건이 아니라면, 우리 국민은 그가 원하는 바를 추구하고 요구해야 한다.",
+    "n5_p5": "그 시대에 이맘의 견해를 이해하고 실천하는 일은 곧 꾸란을 이해하고 실천하는 일의 요체이기 때문이다.",
+    "n6_title": "지위가 높고 강인한 지도자",
+    "n6_sum": "지위가 높고 강인한 지도자",
+    "n6_date": "2026년 11월 28일",
+    "n6_p1": "지위가 높고 강인한 지도자"
+  }
+};
+for (const lang of Object.keys(NEWS_COPY)) Object.assign(translations[lang], NEWS_COPY[lang]);
+
+// Add future articles here with a published YYYY-MM-DD and a unique, increasing number.
 const NEWS = [
-    { id: 'n1', page: 'news1.html', urgent: false },
-    { id: 'n2', page: 'news2.html', urgent: false },
-    { id: 'n3', page: 'news3.html', urgent: false }
+    {"number": 1, "page": "news1.html", "published": "2026-11-28", "video": "emam1.mp4", "thumbTime": 4.5, "thumbY": 8, "title": "مصالح بهشت", "summary": "مصالح بهشت از امام خمینی", "urgent": false},
+    {"number": 2, "page": "news2.html", "published": "2026-11-28", "video": "emam.mp4", "thumbTime": 2, "thumbY": 15, "title": "ادعاهای پوچ", "summary": "ادعاهای پوچ", "urgent": false},
+    {"number": 3, "page": "news3.html", "published": "2026-11-28", "video": "emam3.mp4", "title": "شجاعت امام مجتبی خامنه‌ای", "summary": "درباره شجاعت امام مجتبی خامنه‌ای", "urgent": false},
+    {"number": 4, "page": "news4.html", "published": "2026-11-28", "video": "emam4.mp4", "thumbTime": 2, "thumbY": 18, "title": "امام خمینی با یک کلام باقیمت فرمود", "summary": "امام خمینی با یک کلام باقیمت فرمود", "urgent": false},
+    {"number": 5, "page": "news5.html", "published": "2026-11-28", "video": "emam5.mp4", "title": "نظر امام را باید فهمید", "summary": "ولو درِ منزل امام بسته باشه، نذارن کسی بره سوال کنه ...", "urgent": false},
+    {"number": 6, "page": "news6.html", "published": "2026-11-28", "video": "emam6.mp4", "title": "یک رهبر بالامقام قوی", "summary": "یک رهبر بالامقام قوی", "urgent": false}
 ];
 
+function newestNews() {
+    return [...NEWS].sort((a, b) => b.published.localeCompare(a.published) || b.number - a.number);
+}
+function newsWord(item, key) {
+    return translations[currentLang][`n${item.number}_${key}`] || item[key] || '';
+}
+function newsDate(item) {
+    return new Intl.DateTimeFormat(intlLocale[currentLang], {year:'numeric',month:'long',day:'numeric',timeZone:'UTC'}).format(new Date(item.published + 'T12:00:00Z'));
+}
 function buildTicker() {
     const track = document.getElementById('news-track');
     if (!track) return;
-    const t = translations[currentLang];
-    const items = NEWS.slice().sort((a, b) => (b.urgent ? 1 : 0) - (a.urgent ? 1 : 0));
-    const one = items.map(n =>
-        '<a class="news-text" href="' + n.page + '">' +
-        (n.urgent ? '<span class="urgent-badge">' + t.urgent_badge + '</span>' : '') +
-        t[n.id + '_title'] + '</a>'
-    ).join('');
-    const half = one.repeat(4);
-    track.innerHTML = half + half;
-    const hasUrgent = items.some(n => n.urgent);
+    const t = translations[currentLang], items = newestNews(), unit = document.createDocumentFragment();
+    for (const n of items) {
+        const link = document.createElement('a'); link.className = 'news-text'; link.href = n.page;
+        if (n.urgent) { const b = document.createElement('span'); b.className = 'urgent-badge'; b.textContent = t.urgent_badge; link.append(b); }
+        link.append(document.createTextNode(newsWord(n, 'title'))); unit.append(link);
+    }
+    const stream = document.createDocumentFragment();
+    for (let i = 0; i < 8; i++) stream.append(unit.cloneNode(true));
+    track.replaceChildren(stream);
     const ticker = document.getElementById('news-ticker');
     if (!ticker) return;
-    ticker.classList.toggle('urgent', hasUrgent);
+    const urgent = items.some(n => n.urgent); ticker.classList.toggle('urgent', urgent);
     const label = ticker.querySelector('.news-label');
-    if (label) {
-        label.dataset.i18n = hasUrgent ? 'news_label' : 'news_label_normal';
-        label.textContent = t[label.dataset.i18n];
+    if (label) { label.dataset.i18n = urgent ? 'news_label' : 'news_label_normal'; label.textContent = t[label.dataset.i18n]; }
+}
+function foldNews(s) {
+    return String(s).normalize('NFKC').toLowerCase().replace(/[يى]/gu, 'ی').replace(/ك/gu, 'ک').replace(/\p{M}|ـ/gu, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+}
+function newsElement(tag, cls, text) {
+    const el = document.createElement(tag); if (cls) el.className = cls; if (text) el.textContent = text; return el;
+}
+function buildNewsCard(item) {
+    const title = newsWord(item,'title'), summary = newsWord(item,'sum') || item.summary;
+    const link = newsElement('a','news-card'); link.href = item.page;
+    const thumb = newsElement('div','news-thumb'); const video = newsElement('video');
+    video.preload='metadata'; video.muted=true; video.playsInline=true; video.setAttribute('aria-hidden','true');
+    const missing = newsElement('span','news-missing');
+    // Only static icon markup; all article content is inserted with textContent.
+    missing.innerHTML='<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="26" height="22" rx="4"/><path d="m13 11 8 5-8 5z"/></svg>';
+    missing.append(newsElement('span','',translations[currentLang].ns_no_video));
+    video.addEventListener('error', () => thumb.classList.add('no-media'));
+    video.addEventListener('loadeddata', () => thumb.classList.remove('no-media'));
+    if (Number.isFinite(item.thumbY)) video.style.objectPosition = 'center ' + item.thumbY + '%';
+    video.src = item.video + '#t=' + (item.thumbTime ?? 0.5);
+    const play = newsElement('span','play-icon','▶'); play.setAttribute('aria-hidden','true'); thumb.append(video, play, missing);
+    const body = newsElement('div','news-card-body'); const date = newsElement('time','news-date',newsDate(item)); date.dateTime = item.published;
+    body.append(newsElement('h2','',title), newsElement('p','',summary), date); link.append(thumb, body);
+    const text = [title, summary, item.title, item.summary];
+    for (const lang of new Set([currentLang,'fa'])) {
+        const dictionary=translations[lang], prefix=`n${item.number}_`;
+        if (dictionary[prefix+'body']) text.push(dictionary[prefix+'body']);
+        for (let i=1; dictionary[prefix+'p'+i]; i++) text.push(dictionary[prefix+'p'+i]);
     }
+    link.dataset.searchText = foldNews(text.join(' ')).replace(/\s+/g,'');
+    return link;
+}
+function renderNewsList() {
+    const form = document.getElementById('news-search-demo'), grid = document.getElementById('news-results');
+    if (!form || !grid) return;
+    const input = form.querySelector('input'), clear = form.querySelector('.ns-clear');
+    const empty = document.querySelector('.ns-empty'), status = form.querySelector('.ns-count');
+    const t=translations[currentLang]; input.dir=document.documentElement.dir; input.placeholder=t.ns_hint;
+    form.setAttribute('aria-label',t.ns_label); clear.title=t.ns_clear; clear.setAttribute('aria-label',t.ns_clear);
+    if (grid.dataset.lang !== currentLang) {
+        grid.replaceChildren(...newestNews().map(buildNewsCard)); grid.dataset.lang=currentLang;
+    }
+    function filter() {
+        // Read the active language here, not the language at event-binding time.
+        const dict = translations[currentLang], fmt = new Intl.NumberFormat(intlLocale[currentLang]);
+        const terms = foldNews(input.value).split(/\s+/).filter(Boolean); let n = 0;
+        for (const card of grid.children) { card.hidden = !terms.every(term => card.dataset.searchText.includes(term)); if (!card.hidden) n++; }
+        clear.hidden = !input.value; empty.hidden = n !== 0; grid.hidden = n === 0;
+        status.textContent=(terms.length ? dict.ns_matches : dict.ns_all).replace('{n}',fmt.format(n)).replace('{total}',fmt.format(grid.children.length));
+    }
+    if (!form.dataset.ready) {
+        const reset = () => { input.value=''; filter(); input.focus(); };
+        input.addEventListener('input',filter);
+        input.addEventListener('keydown',e=>{ if(e.key==='Escape' && input.value) { e.preventDefault(); reset(); } });
+        form.addEventListener('submit', e=>{e.preventDefault(); filter();});
+        clear.addEventListener('click',reset); empty.querySelector('button').addEventListener('click',reset);
+        form.dataset.ready='1';
+    }
+    form.hidden=false; filter();
+}
+function initStoryMedia() {
+    document.querySelectorAll('.news-story-media video').forEach(v => {
+        const notice=v.parentElement.querySelector('.news-media-notice');
+        const showError=() => { v.hidden=true; notice.hidden=false; };
+        v.addEventListener('error',showError);
+        v.addEventListener('loadedmetadata',()=>{ v.hidden=false; notice.hidden=true; });
+        if (v.error) showError();
+    });
 }
 
 function changeLang(lang) {
@@ -203,131 +450,101 @@ function changeLang(lang) {
     document.querySelectorAll('[data-i18n],[data-auto]').forEach(el => translateEl(el, lang));
     renderCountries();
     buildTicker();
+    renderNewsList();
 }
 
-const DB_URL = 'https://intent-oriole-164093.upstash.io';
-const DB_TOKEN = 'gQAAAAAAAoD9AAIgcDE2N2MzODA0ZWVmMzA0NTE2YmFlYmVjNWYzOWNhMjc0MA';
-let serverVotes = {};
-
-async function db(cmd) {
-    const ctl = new AbortController();
-    const timer = setTimeout(() => ctl.abort(), 10000);
-    try {
-        const r = await fetch(DB_URL, {
-            method: 'POST',
-            headers: { Authorization: 'Bearer ' + DB_TOKEN },
-            body: JSON.stringify(cmd),
-            signal: ctl.signal
-        });
-        const j = await r.json();
-        if (j.error) throw new Error(j.error);
-        return j.result;
-    } finally {
-        clearTimeout(timer);
-    }
+// Only the same-origin vote API talks to the database. Never ship database credentials in a browser bundle.
+const VOTES_API = '/api/votes';
+const voteIds = new Set(['muslim', ...COUNTRY_CODES.map(c=>c.toLowerCase())]);
+let serverVotes = null, voteRevision = 0, readingVotes = false, writingVote = false, voteMessage = '';
+let memoryVoter, memoryChoices = { muslim:false, country:null };
+const voteFormats = new Map();
+function getUserVoted() {
+    try { const v=JSON.parse(localStorage.getItem('user_voted')); if(v && typeof v==='object') memoryChoices={muslim:v.muslim===true,country:voteIds.has(v.country)&&v.country!=='muslim'?v.country:null}; } catch(e) {}
+    return {...memoryChoices};
 }
-
-function setDbStatus(msg) {
-    const el = document.getElementById('db-status');
-    if (el) el.textContent = msg ? 'اتصال به دیتابیس ناموفق بود: ' + msg : '';
-}
-
-async function fetchAllVotes() {
-    const arr = (await db(['HGETALL', 'votes'])) || [];
-    const o = {};
-    for (let i = 0; i < arr.length; i += 2) o[arr[i]] = parseInt(arr[i + 1], 10) || 0;
-    return o;
-}
-
-function getUserVoted() { try { return JSON.parse(localStorage.getItem('user_voted')) || { muslim: false, country: null }; } catch (e) { return { muslim: false, country: null }; } }
-function saveUserVoted(v) { try { localStorage.setItem('user_voted', JSON.stringify(v)); } catch (e) {} }
+function saveUserVoted(v) { memoryChoices={...v}; try {localStorage.setItem('user_voted',JSON.stringify(v));} catch(e) {} }
 function voterId() {
-    try {
-        let v = localStorage.getItem('voter_id');
-        if (!v) { v = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (String(Math.random()).slice(2) + Date.now()); localStorage.setItem('voter_id', v); }
-        return v;
-    } catch (e) { return 'anon-' + Math.random().toString(36).slice(2); }
+    if (memoryVoter) return memoryVoter;
+    try { const id=localStorage.getItem('voter_id'); if (id && /^[\w-]{8,100}$/.test(id)) return (memoryVoter=id); } catch(e) {}
+    memoryVoter=(globalThis.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'v-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
+    try {localStorage.setItem('voter_id',memoryVoter);} catch(e) {} return memoryVoter;
 }
-
+function canonicalVotes(obj) {
+    if (!obj || typeof obj!=='object' || Array.isArray(obj)) throw new Error('Invalid vote snapshot');
+    const clean=Object.create(null);
+    for (const [field,value] of Object.entries(obj)) {
+        const id=field.toLowerCase(); if(!voteIds.has(id)) continue;
+        if (!((typeof value==='string' && /^\d{1,20}$/.test(value)) || (typeof value==='number' && Number.isSafeInteger(value) && value>=0))) throw new Error('Invalid vote count');
+        clean[id]=(BigInt(clean[id] || 0) + BigInt(value)).toString();
+    }
+    return clean;
+}
+function voteNumber(id) {
+    if (serverVotes === null) return '—';
+    if (!voteFormats.has(currentLang)) voteFormats.set(currentLang,new Intl.NumberFormat(intlLocale[currentLang]));
+    return voteFormats.get(currentLang).format(BigInt(serverVotes[id] || '0'));
+}
+function showVoteMessage(kind = voteMessage) {
+    voteMessage=kind; const el=document.getElementById('db-status'); if(!el) return;
+    const t=translations[currentLang];
+    el.textContent=kind==='read' ? t.vs_offline+' '+(serverVotes===null?t.vs_unknown:t.vs_stale) : (kind==='write'?t.vs_fail:kind==='pending'?t.vs_sending:'');
+}
+async function voteRequest(body) {
+    const ctl=new AbortController(), timer=setTimeout(()=>ctl.abort(),12000);
+    try {
+        const options={method:body?'POST':'GET', cache:'no-store', signal:ctl.signal, credentials:'same-origin', headers:{Accept:'application/json'}};
+        if(body){options.headers['Content-Type']='application/json';options.body=JSON.stringify(body);}
+        const r=await fetch(VOTES_API,options);
+        if(!r.ok && !(body && r.status===409)) throw new Error('Vote service unavailable');
+        const j=await r.json(); return {status:r.status,choice:j.choice,votes:canonicalVotes(j.votes)};
+    } finally {clearTimeout(timer);}
+}
 function applyCounts() {
-    const m = document.getElementById('muslim-count');
-    if (m) m.innerText = serverVotes.muslim || 0;
-    document.querySelectorAll('.country-btn .vote-count').forEach(el => {
-        el.innerText = serverVotes[el.id.replace('count-', '')] || 0;
-    });
+    const m=document.getElementById('muslim-count'); if(m) m.textContent=voteNumber('muslim');
+    document.querySelectorAll('.country-btn .vote-count').forEach(el=>{el.textContent=voteNumber(el.id.slice(6));});
 }
-
 async function loadServerVotes() {
-    if (!document.getElementById('voting-grid')) return;
+    if(!document.getElementById('voting-grid') || readingVotes || writingVote) return;
+    readingVotes=true; const revision=voteRevision;
     try {
-        serverVotes = await fetchAllVotes();
-        applyCounts();
-        setDbStatus('');
-    } catch (e) {
-        setDbStatus(e.name === 'AbortError' ? 'timeout' : e.message);
-    }
+        const snapshot=await voteRequest(); if(revision!==voteRevision) return;
+        serverVotes=snapshot.votes; applyCounts(); showVoteMessage('');
+    } catch(e) { if(revision===voteRevision) showVoteMessage('read'); }
+    finally {readingVotes=false;}
 }
-
-setInterval(loadServerVotes, 15000);
-
+setInterval(loadServerVotes,15000);
+window.addEventListener('storage',e=>{if(e.key==='user_voted'){renderCountries();loadServerVotes();}});
 function renderCountries() {
-    const grid = document.getElementById('voting-grid');
-    if (!grid) return;
-    grid.querySelectorAll('.country-btn').forEach(b => b.remove());
-
-    const userVoted = getUserVoted();
-    const list = COUNTRY_CODES.map(code => ({ code, name: countryName(code, currentLang) }));
-    list.sort((a, b) => a.code === 'IR' ? -1 : b.code === 'IR' ? 1 : a.name.localeCompare(b.name, intlLocale[currentLang]));
-
-    list.forEach(c => {
-        const id = c.code.toLowerCase();
-        const div = document.createElement('div');
-        div.className = 'vote-btn country-btn';
-        if (userVoted.country === id) div.classList.add('voted');
-        div.innerHTML = `<span>${flagOf(c.code)} ${c.name}</span> <span class="vote-count" id="count-${id}">${serverVotes[id] || 0}</span>`;
-        div.onclick = () => vote(id, `count-${id}`);
-        grid.appendChild(div);
-    });
+    const grid=document.getElementById('voting-grid'); if(!grid) return;
+    grid.querySelectorAll('.country-btn').forEach(b=>b.remove());
+    const v=getUserVoted(), muslim=document.getElementById('btn-muslim'); if(muslim) muslim.classList.toggle('voted',v.muslim);
+    const list=COUNTRY_CODES.map(code=>({code,name:countryName(code,currentLang)}));
+    list.sort((a,b)=>a.code==='IR'?-1:b.code==='IR'?1:a.name.localeCompare(b.name,intlLocale[currentLang]));
+    const frag=document.createDocumentFragment();
+    for(const c of list){
+        const id=c.code.toLowerCase(), div=document.createElement('div'), label=document.createElement('span'), count=document.createElement('span');
+        div.className='vote-btn country-btn'; div.classList.toggle('voted',v.country===id);
+        label.textContent=flagOf(c.code)+' '+c.name; count.className='vote-count';count.id='count-'+id;count.textContent=voteNumber(id);
+        div.append(label,count);div.onclick=()=>vote(id);frag.append(div);
+    }
+    grid.append(frag);applyCounts();showVoteMessage();
 }
-
-async function vote(id, countElementId) {
-    const userVoted = getUserVoted();
-    const msgs = translations[currentLang];
-    const isMuslim = (id === 'muslim');
-
-    if (isMuslim && userVoted.muslim) return alert(msgs.alert_muslim);
-    if (!isMuslim && userVoted.country) return alert(msgs.alert_country);
-
+async function vote(id) {
+    if(writingVote || !voteIds.has(id)) return;
+    const isMuslim=id==='muslim', existing=getUserVoted(), msgKey=isMuslim?'alert_muslim':'alert_country';
+    if(isMuslim?existing.muslim:existing.country){loadServerVotes();return alert(translations[currentLang][msgKey]);}
+    writingVote=true; voteRevision++; showVoteMessage('pending');
+    const grid=document.getElementById('voting-grid'); if(grid) grid.setAttribute('aria-busy','true');
     try {
-        const slot = isMuslim ? 'muslim' : 'country';
-        const key = 'voted:' + slot + ':' + voterId();
-        const ok = await db(['SET', key, id, 'NX', 'EX', '31536000']);
-        if (ok !== 'OK') {
-            const prev = await db(['GET', key]);
-            if (isMuslim) userVoted.muslim = true; else if (prev) userVoted.country = prev;
-            serverVotes = await fetchAllVotes();
-            saveUserVoted(userVoted);
-            applyCounts();
-            renderCountries();
-            return alert(isMuslim ? msgs.alert_muslim : msgs.alert_country);
-        }
-        await db(['HINCRBY', 'votes', id, '1']);
-        serverVotes = await fetchAllVotes();
-        setDbStatus('');
-    } catch (e) {
-        setDbStatus(e.name === 'AbortError' ? 'timeout' : e.message);
-        return alert('رای ثبت نشد. ارتباط با دیتابیس برقرار نشد.');
-    }
-
-    if (isMuslim) {
-        userVoted.muslim = true;
-        const b = document.getElementById('btn-muslim'); if (b) b.classList.add('voted');
-    } else {
-        userVoted.country = id;
-        const el = document.getElementById(countElementId); if (el) el.parentElement.classList.add('voted');
-    }
-    saveUserVoted(userVoted);
-    applyCounts();
+        const r=await voteRequest({id,voter:voterId()});
+        const chosen=r.choice || (r.status===200?id:null);
+        if(!voteIds.has(chosen) || (chosen==='muslim')!==isMuslim) throw new Error('Invalid vote receipt');
+        serverVotes=r.votes; const v=getUserVoted(); if(isMuslim) v.muslim=true; else v.country=chosen;
+        saveUserVoted(v); showVoteMessage(''); renderCountries();
+        if(r.status===409) alert(translations[currentLang][msgKey]);
+    } catch(e) {showVoteMessage('write');}
+    finally {writingVote=false;if(grid) grid.removeAttribute('aria-busy');}
 }
 
 function toggleMenu() { const s = document.getElementById('sidebar'); if (s) s.classList.toggle('open'); }
@@ -530,6 +747,7 @@ if (!isTouch) {
 
 function initPage() {
     syncNewsMusic();
+    initStoryMedia();
     document.querySelectorAll('[data-i18n],[data-auto]').forEach(el => { if (el.dataset.orig === undefined) el.dataset.orig = el.textContent.trim(); });
 
     const langBtn = document.getElementById('lang-btn');

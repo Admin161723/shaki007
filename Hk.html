@@ -60,32 +60,34 @@
 
     <main class="inner-page news-page">
         <h1 data-i18n="hk_title">خبر و حمایتگران</h1>
-        <div class="news-grid">
-            <a class="news-card" href="news1.html">
-                <div class="news-thumb"><video src="emam.mp4#t=0.5" preload="metadata" muted playsinline></video><span class="play-icon">▶</span></div>
-                <div class="news-card-body">
-                    <h2 data-i18n="n1_title">مصالح بهشت</h2>
-                    <p data-i18n="n1_sum">مصالح بهشت از امام خمینی</p>
-                    <span class="news-date" data-i18n="n1_date">۷ آذر ۱۴۰۵</span>
-                </div>
-            </a>
-            <a class="news-card" href="news2.html">
-                <div class="news-thumb"><video src="emam1.mp4#t=0.5" preload="metadata" muted playsinline></video><span class="play-icon">▶</span></div>
-                <div class="news-card-body">
-                    <h2 data-i18n="n2_title">ادعاهای پوچ</h2>
-                    <p data-i18n="n2_sum">ادعاهای پوچ</p>
-                    <span class="news-date" data-i18n="n2_date">۷ آذر ۱۴۰۵</span>
-                </div>
-            </a>
-            <a class="news-card" href="news3.html">
-                <div class="news-thumb"><video src="emam3.mp4#t=0.5" preload="metadata" muted playsinline></video><span class="play-icon">▶</span></div>
-                <div class="news-card-body">
-                    <h2 data-i18n="n3_title">شجاعت امام مجتبی خامنه‌ای</h2>
-                    <p data-i18n="n3_sum">درباره شجاعت امام مجتبی خامنه‌ای</p>
-                    <span class="news-date" data-i18n="n3_date">۷ آذر ۱۴۰۵</span>
-                </div>
-            </a>
+        <form class="news-search-demo" id="news-search-demo" hidden role="search" aria-label="جست‌وجو در خبرها">
+            <div class="ns-meta">
+                <label for="news-query" data-i18n="ns_label">جست‌وجو در خبرها</label>
+                <span id="news-result-count" class="ns-count" role="status" aria-live="polite" aria-atomic="true"></span>
+            </div>
+            <div class="ns-field">
+                <svg class="ns-magnifier" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="10.3" cy="10.3" r="6.9"/><path d="m15.5 15.5 5.0 5.0"/></svg>
+                <input type="search" id="news-query" dir="rtl" placeholder="عنوان یا توضیح خبر را بنویسید…" autocomplete="off" spellcheck="false" inputmode="search" enterkeyhint="search" aria-controls="news-results">
+                <button class="ns-clear" type="button" aria-label="پاک کردن جست‌وجو" title="پاک کردن جست‌وجو" hidden><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+                <button class="ns-submit" type="submit" data-i18n="ns_go">جست‌وجو</button>
+            </div>
+        </form>
+        <div id="news-results" class="news-grid"></div>
+        <div class="ns-empty" hidden>
+            <h2 data-i18n="ns_none">خبری پیدا نشد</h2>
+            <p data-i18n="ns_again">یک عبارت کوتاه‌تر را امتحان کنید.</p>
+            <button type="button" data-i18n="ns_reset">نمایش همهٔ خبرها</button>
         </div>
+        <noscript>
+            <div class="news-grid">
+                <a class="news-card" href="news6.html"><div class="news-card-body"><h2>یک رهبر بالامقام قوی</h2><p>یک رهبر بالامقام قوی</p><time class="news-date" datetime="2026-11-28">۷ آذر ۱۴۰۵</time></div></a>
+                <a class="news-card" href="news5.html"><div class="news-card-body"><h2>نظر امام را باید فهمید</h2><p>ولو درِ منزل امام بسته باشه، نذارن کسی بره سوال کنه ...</p><time class="news-date" datetime="2026-11-28">۷ آذر ۱۴۰۵</time></div></a>
+                <a class="news-card" href="news4.html"><div class="news-card-body"><h2>امام خمینی با یک کلام باقیمت فرمود</h2><p>امام خمینی با یک کلام باقیمت فرمود</p><time class="news-date" datetime="2026-11-28">۷ آذر ۱۴۰۵</time></div></a>
+                <a class="news-card" href="news3.html"><div class="news-card-body"><h2>شجاعت امام مجتبی خامنه‌ای</h2><p>درباره شجاعت امام مجتبی خامنه‌ای</p><time class="news-date" datetime="2026-11-28">۷ آذر ۱۴۰۵</time></div></a>
+                <a class="news-card" href="news2.html"><div class="news-card-body"><h2>ادعاهای پوچ</h2><p>ادعاهای پوچ</p><time class="news-date" datetime="2026-11-28">۷ آذر ۱۴۰۵</time></div></a>
+                <a class="news-card" href="news1.html"><div class="news-card-body"><h2>مصالح بهشت</h2><p>مصالح بهشت از امام خمینی</p><time class="news-date" datetime="2026-11-28">۷ آذر ۱۴۰۵</time></div></a>
+            </div>
+        </noscript>
     </main>
 
     <footer class="main-footer">
